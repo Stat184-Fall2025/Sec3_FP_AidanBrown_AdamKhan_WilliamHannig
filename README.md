@@ -1,6 +1,5 @@
 # Project Title
-
-Write a 1-2 sentences that quickly and clearly convey what your repo is for.
+Netflix Data set
 
 ## Overview
 
@@ -16,8 +15,7 @@ Be sure to list where you got any data used within the project. Be sure to ackno
 
 ## Current Plan
 
-Provide some information about what you intend to doe with the project. You can additionally refer the visitor to your detailed plan document.
-
+we intend to draw ready and ongoing inferences with Netflix data. 
 ## Repo Structure
 
 Use this section to explain the structure of your repo. This should help visitors quickly figure out where they should look to find certain elements. Further, you can use this space to highlight and briefly explain important/key files in the repo.
