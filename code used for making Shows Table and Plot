@@ -1,0 +1,98 @@
+# Netflix Engagement Report Analysis TABLE FOR SHOWS
+# Shows Table
+library(ggplot2)
+library(dplyr)
+library(readxl)
+
+# Read the Excel file - skip the header rows
+netflix <- read_excel("C:/Users/akhan/OneDrive/What_We_Watched_A_Netflix_Engagement_Report_2025Jan-Jun.xlsx", skip = 4)
+
+# Clean up the column names (they might have issues)
+colnames(netflix) <- c("Title", "Available_Globally", "Release_Date", 
+                       "Hours_Viewed", "Runtime", "Views")
+
+# Remove commas from numeric columns and convert to numbers
+netflix$Hours_Viewed_Num <- as.numeric(gsub(",", "", netflix$Hours_Viewed))
+netflix$Views_Num <- as.numeric(gsub(",", "", netflix$Views))
+
+# Get top 20 shows by hours viewed
+top_shows <- netflix %>%
+  filter(!is.na(Hours_Viewed_Num)) %>%
+  arrange(desc(Hours_Viewed_Num)) %>%
+  head(20) %>%
+  mutate(
+    # Format numbers with commas for display
+    Hours_Display = format(Hours_Viewed_Num, big.mark = ",", scientific = FALSE),
+    Views_Display = format(Views_Num, big.mark = ",", scientific = FALSE),
+    # Clean up title (remove extra stuff after //)
+    Title_Clean = gsub(" //.*", "", Title)
+  ) %>%
+  select(Title_Clean, Release_Date, Hours_Display, Views_Display)
+
+# Rename columns for the table
+colnames(top_shows) <- c("Show Title", "Release Date", "Hours Viewed", "Total Views")
+
+# Create PDF with visual table using ggplot
+pdf("netflix_top_shows_table.pdf", width = 11, height = 8.5)
+
+# Create a blank plot for the table
+p <- ggplot() + 
+  theme_void() +
+  annotation_custom(
+    grob = tableGrob(top_shows, rows = NULL,
+                     theme = ttheme_minimal(
+                       core = list(fg_params = list(hjust = 0, x = 0.05)),
+                       colhead = list(fg_params = list(fontface = "bold", col = "white"),
+                                      bg_params = list(fill = "#E50914"))
+                     ))
+  ) +
+  labs(title = "Top 20 Netflix Shows by Hours Viewed (Jan-Jun 2025)") +
+  theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5))
+
+print(p)
+
+dev.off()
+
+# Print the table
+print(top_shows)
+
+# Some basic stats
+cat("\n--- Quick Stats ---\n")
+cat("Total shows in dataset:", nrow(netflix), "\n")
+cat("Average hours viewed:", format(mean(netflix$Hours_Viewed_Num, na.rm = TRUE), 
+                                    big.mark = ","), "\n")
+cat("Most viewed show:", top_shows$`Show Title`[1], "\n")
+
+cat("\nTable saved as: netflix_top_shows_table.pdf\n")
+
+
+
+#FOR PLOT OF SHOWS
+library(ggplot2)
+library(dplyr)
+library(readr)
+netflix_data <- read_csv("netflix.csv")
+tv_shows <- netflix_data %>%
+  filter(type == "TV Show")
+# Group by release year and count
+shows_by_year <- tv_shows %>%
+  group_by(release_year) %>%
+  summarise(count = n()) %>%
+  filter(release_year >= 2000)  # Only recent shows
+plot <- ggplot(shows_by_year, aes(x = release_year, y = count)) +
+  geom_line(color = "#E50914", size = 1.2) +
+  geom_point(color = "#E50914", size = 3) +
+  labs(
+    title = "Netflix TV Shows Added by Release Year",
+    subtitle = "Shows released from 2000 onwards",
+    x = "Release Year",
+    y = "Number of Shows"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold")
+  )
+
+# Save and display
+ggsave("netflix_shows_by_year.png", plot, width = 10, height = 6, dpi = 300)
+print(plot)
