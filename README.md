@@ -23,4 +23,4 @@ Use this section to explain the structure of your repo. This should help visitor
 
 ## Authors
 
-Give information about who are the authors of the project and how people can get in touch if they have questions.
+Adam Khan, team member (akk6265@psu.edu) Will Hannig, team member (wph5213@psu.edu) Aidan Brown Thomas, team member (abt5690@psu.edu) 
