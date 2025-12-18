@@ -1,7 +1,7 @@
 library(ggplot2)
 library(dplyr)
 library(readr)
-
+library(gt)
 # Reading the csv file for the hours watched column
 hours_watched_raw <- read_csv("C:/Users/hanni/Downloads/What_We_Watched_A_Netflix_Engagement_Report_2025Jan-Jun(Shows).csv", skip = 5)
 
@@ -74,7 +74,7 @@ top_20_with_countries <- top_20_matched %>%
   left_join(countries_clean, by = c("Country_Title" = "title")) %>%
   select(Title, `Hours Viewed`, Views, country)
 
-# PASTE METHOD 3 HERE - Replace all the country values
+# Replace all the country values
 top_20_with_countries$country <- c(
   "South Korea",      # Row 1
   "South Korea",      # Row 2
@@ -99,11 +99,68 @@ top_20_with_countries$country <- c(
 )
 
 # Remove weird symbols from titles
-top_20_with_countries$Title <- gsub(" //.*", "", top_20_with_countries$Title)
+top_20_with_countries$Title <- gsub(" //.*", "", top_20_with_countries$Title, useBytes = TRUE)
 
 
 
 View(top_20_with_countries)
+
+netflix_table <- country_hours %>%
+  arrange(desc(Total_Hours)) %>%
+  gt() %>%
+  tab_header(
+    title = md("**Total Hours Viewed by Country**"),
+    subtitle = "Top 20 Netflix Shows"
+  ) %>%
+  cols_label(
+    country = "Country",
+    Total_Hours = "Total Hours Viewed"
+  ) %>%
+  fmt_number(
+    columns = Total_Hours,
+    decimals = 0,
+    use_seps = TRUE
+  ) %>%
+  data_color(
+    columns = Total_Hours,
+    colors = scales::col_numeric(
+      palette = c("#141414", "#E50914"),
+      domain = NULL
+    )
+  ) %>%
+  tab_options(
+    table.background.color = "#141414",
+    heading.background.color = "#141414",
+    heading.title.font.size = 24,
+    heading.subtitle.font.size = 14,
+    heading.align = "left",
+    column_labels.background.color = "#E50914",
+    column_labels.font.weight = "bold",
+    column_labels.font.size = 14,
+    table.font.color = "white",
+    table.border.top.color = "#E50914",
+    table.border.bottom.color = "#E50914",
+    data_row.padding = px(8)
+  ) %>%
+  tab_style(
+    style = cell_text(weight = "bold", color = "white"),
+    locations = cells_title(groups = "title")
+  ) %>%
+  tab_style(
+    style = cell_text(color = "#B3B3B3"),
+    locations = cells_title(groups = "subtitle")
+  )
+
+# Display the table
+netflix_table
+
+# Save as PNG
+gtsave(netflix_table, "netflix_table.png", vwidth = 800, vheight = 600)
+
+# Save as PDF
+gtsave(netflix_table, "netflix_table.pdf")
+
+
 
 
 country_hours <- top_20_with_countries %>%
