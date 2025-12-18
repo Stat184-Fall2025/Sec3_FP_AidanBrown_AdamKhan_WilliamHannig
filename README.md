@@ -3,11 +3,7 @@ Netflix Data set
 
 ## Overview
 
-Expand on those introductory sentences with a brief but informative description of your project's purpose and goals. This section should help visitors decide whether they should dig deeper into your repo/project.
-
-### Interesting Insight (Optional)
-
-This is optional but highly recommended. You'll include one interesting insight from your project as part of the README. This insight is most effective when you include a visual. Keep in mind that this visual must be included as an image file (e.g., JPG, PNG, etc.). You can export plots created with `{ggplot2}` by using the function `ggsave`.
+The purpose of this project is to provide valuable data on Netflix, but also streaming services overall. We found a plethora of valuable data that we wish to share with as many people as we can. Part of the reason why we chose the Netflix data set, and streaming related data, is that we are passionate and interested in how streaming services have evolved from the 2000s until now. Overall, we hope that people peruse the variety of code, plots and tables we handmade, focusing on Netflix shows, movies and countries they are featured in. 
 
 ## Data Sources and Acknowledgements
 
@@ -18,8 +14,7 @@ For this project we got two data sets about Netflix shows and movies. The first 
 we intend to draw ready and ongoing inferences with Netflix data. 
 ## Repo Structure
 
-Use this section to explain the structure of your repo. This should help visitors quickly figure out where they should look to find certain elements. Further, you can use this space to highlight and briefly explain important/key files in the repo.
-
+The main branch is where we put all of our primary files: the QMD containing all of our pdfs, and code, as well as an area to brainstorm ideas collectively. We also have a dev branch that pertains to each one of us solving our own problems, come up with seeing patterns involving our data, etc. 
 
 ## Authors
 
