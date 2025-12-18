@@ -11,7 +11,7 @@ This is optional but highly recommended. You'll include one interesting insight 
 
 ## Data Sources and Acknowledgements
 
-Be sure to list where you got any data used within the project. Be sure to acknowledge any one whose work or elements you're drawing upon.
+For this project we got two data sets about Netflix shows and movies. The first dataset includes all of the Netflix shows and movies, if they are gloablly released, the total amount of views, the run time in hours, and the tota amount of views. This dataset came from Netflixs annual, "What we Watched Report 2025". The second data set we used includes; every Netflix title, the director and casts, the origination country, the release year, legnth, and the description on netflix. This dataset was taken from Kaggle. We were given permission from the Professor to use this dataset but we will not be using anycode connected to it. 
 
 ## Current Plan
 
