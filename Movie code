@@ -4,7 +4,7 @@ library(readxl)
 library(scales)
 
 # Read the Excel file (use your real path OR file.choose())
-netflix <- read_excel("C:/Users/abrow/Documents/What_We_Watched_A_Netflix_Engagement_Report_2025Jan-Jun(movies).xlsx", skip = 4)
+netflix <- read_excel("C:/Users/abrow/Downloads/What_We_Watched_A_Netflix_Engagement_Report_2025Jan-Jun(movies).xlsx", sheet = "Movies", skip = 5)
 
 colnames(netflix) <- c("Title", "Available_Globally", "Release_Date",
                        "Hours_Viewed", "Runtime", "Views")
@@ -17,10 +17,15 @@ netflix <- netflix %>%
   )
 
 top20 <- netflix %>%
-  filter(!is.na(Hours_Viewed_Num)) %>%
+  filter(
+    !is.na(Hours_Viewed_Num),
+    !is.na(Runtime),        # ← keeps movies only
+    Runtime != ""           # ← extra safety
+  ) %>%
   arrange(desc(Hours_Viewed_Num)) %>%
   slice_head(n = 20) %>%
   mutate(Title_Clean = reorder(Title_Clean, Hours_Viewed_Num))
+
 
 p1 <- ggplot(top20, aes(x = Title_Clean, y = Hours_Viewed_Num)) +
   geom_col(fill = "#E50914") +
