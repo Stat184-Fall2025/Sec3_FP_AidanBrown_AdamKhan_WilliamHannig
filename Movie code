@@ -39,5 +39,38 @@ p1 <- ggplot(top20, aes(x = Title_Clean, y = Hours_Viewed_Num)) +
   theme_minimal() +
   theme(plot.title = element_text(face = "bold"))
 
+
+#CODE FOR PLOT:
+library(ggplot2)
+library(dplyr)
+library(readxl)
+library(scales)
+
+# Read the Excel file (use your real path OR file.choose())
+netflix <- read_excel("C:/Users/abrow/Downloads/What_We_Watched_A_Netflix_Engagement_Report_2025Jan-Jun(movies).xlsx", sheet = "Movies", skip = 5)
+
+colnames(netflix) <- c("Title", "Available_Globally", "Release_Date",
+                       "Hours_Viewed", "Runtime", "Views")
+
+movies <- netflix %>%
+  mutate(
+    Hours_Viewed_Num = as.numeric(gsub(",", "", Hours_Viewed)),
+    Runtime_Min = as.numeric(gsub("[^0-9]", "", Runtime))
+  ) %>%
+  filter(!is.na(Hours_Viewed_Num), !is.na(Runtime_Min))
+
+p <- ggplot(movies, aes(x = Runtime_Min, y = Hours_Viewed_Num)) +
+  geom_point(alpha = 0.6, color = "#E50914") +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  scale_y_continuous(labels = comma) +
+  labs(
+    title = "Do Longer Netflix Movies Get More Engagement?",
+    x = "Runtime (minutes)",
+    y = "Hours Viewed (Jan–Jun 2025)"
+  ) +
+  theme_minimal()
+
+print(p)
+
 ggsave("top20_movies_hours_viewed.png", p1, width = 10, height = 7, dpi = 300)
 print(p1)
