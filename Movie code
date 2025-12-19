@@ -1,0 +1,38 @@
+library(ggplot2)
+library(dplyr)
+library(readxl)
+library(scales)
+
+# Read the Excel file (use your real path OR file.choose())
+netflix <- read_excel("C:/Users/abrow/Documents/What_We_Watched_A_Netflix_Engagement_Report_2025Jan-Jun(movies).xlsx", skip = 4)
+
+colnames(netflix) <- c("Title", "Available_Globally", "Release_Date",
+                       "Hours_Viewed", "Runtime", "Views")
+
+netflix <- netflix %>%
+  mutate(
+    Hours_Viewed_Num = as.numeric(gsub(",", "", Hours_Viewed)),
+    Views_Num        = as.numeric(gsub(",", "", Views)),
+    Title_Clean      = gsub(" //.*", "", Title)
+  )
+
+top20 <- netflix %>%
+  filter(!is.na(Hours_Viewed_Num)) %>%
+  arrange(desc(Hours_Viewed_Num)) %>%
+  slice_head(n = 20) %>%
+  mutate(Title_Clean = reorder(Title_Clean, Hours_Viewed_Num))
+
+p1 <- ggplot(top20, aes(x = Title_Clean, y = Hours_Viewed_Num)) +
+  geom_col(fill = "#E50914") +
+  coord_flip() +
+  scale_y_continuous(labels = comma) +
+  labs(
+    title = "Top 20 Netflix Movies by Hours Viewed (Jan–Jun 2025)",
+    x = NULL,
+    y = "Hours Viewed"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold"))
+
+ggsave("top20_movies_hours_viewed.png", p1, width = 10, height = 7, dpi = 300)
+print(p1)
