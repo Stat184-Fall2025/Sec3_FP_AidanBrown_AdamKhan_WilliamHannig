@@ -11,7 +11,7 @@ For this project we got two data sets about Netflix shows and movies. The first 
 
 ## Current Plan
 
-we intend to draw ready and ongoing inferences with Netflix data. 
+We intend to draw ready and ongoing inferences with Netflix data. To do this, we're taking the top 20 movies, shows, and countries in which they are from and comparing their watch times. This will give us data to further back up our conclusion.
 ## Repo Structure
 
 The main branch is where we put all of our primary files: the QMD containing all of our pdfs, and code, as well as an area to brainstorm ideas collectively. We also have a dev branch that pertains to each one of us solving our own problems, come up with seeing patterns involving our data, etc. 
