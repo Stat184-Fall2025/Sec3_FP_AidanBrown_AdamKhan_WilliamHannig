@@ -11,7 +11,7 @@ For this project we got two data sets about Netflix shows and movies. The first 
 
 ## Current Plan
 
-we intend to draw ready and ongoing inferences with Netflix data. 
+we intend to draw ready and ongoing inferences with Netflix data. It is imperative we do so, because Netflix is currently the top streaming service. we allocated work equally: one team member handles shows and their data, the other countries, and the last movies. We used communication methods via group chats to coordinate effectively, and readily kept our professor updated with progress.
 ## Repo Structure
 
 The main branch is where we put all of our primary files: the QMD containing all of our pdfs, and code, as well as an area to brainstorm ideas collectively. We also have a dev branch that pertains to each one of us solving our own problems, come up with seeing patterns involving our data, etc. 

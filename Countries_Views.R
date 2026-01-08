@@ -76,26 +76,26 @@ top_20_with_countries <- top_20_matched %>%
 
 # Replace all the country values
 top_20_with_countries$country <- c(
-  "South Korea",      # Row 1
-  "South Korea",      # Row 2
-  "Brazil",           # Row 3
-  "United States",    # Row 4
-  "United States",    # Row 5
-  "South Korea",      # Row 6
-  "Colombia",         # Row 7
-  "South Korea",      # Row 8
-  "United States",    # Row 9
-  "United States",    # Row 10
-  "United States",    # Row 11
-  "Spain",            # Row 12
-  "Turkey",           # Row 13
-  "South Korea",      # Row 14
-  "United States",    # Row 15
-  "United States",    # Row 16
-  "United States",    # Row 17
-  "United Kingdom",   # Row 18
-  "United States",    # Row 19
-  "Denmark"           # Row 20
+  "South Korea",      
+  "South Korea",      
+  "Brazil",           
+  "United States",   
+  "United States",    
+  "South Korea",      
+  "Colombia",         
+  "South Korea",      
+  "United States",    
+  "United States",    
+  "United States",    
+  "Spain",           
+  "Turkey",           
+  "South Korea",      
+  "United States",   
+  "United States",    
+  "United States",   
+  "United Kingdom",  
+  "United States",   
+  "Denmark"           
 )
 
 # Remove weird symbols from titles
@@ -154,11 +154,6 @@ netflix_table <- country_hours %>%
 # Display the table
 netflix_table
 
-# Save as PNG
-gtsave(netflix_table, "netflix_table.png", vwidth = 800, vheight = 600)
-
-# Save as PDF
-gtsave(netflix_table, "netflix_table.pdf")
 
 
 
@@ -175,6 +170,7 @@ ggplot(country_hours, aes(x = reorder(country, Total_Hours), y = Total_Hours)) +
        x = "Country",
        y = "Total Hours Viewed") +
   theme_minimal()
+
 
 
 
